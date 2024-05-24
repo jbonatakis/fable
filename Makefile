@@ -19,7 +19,9 @@ test: $(VENV)
 	@$(BIN)/python -m pytest test/
 
 clean:
-	@rm -rf env/ .ruff_cache/ src/fable.egg-info/
+	@rm -rf env/ .ruff_cache/ fable.egg-info/ \
+	src/fable.egg-info/ src/fable/__pycache__ 
+
 
 run-example: $(VENV)
 	@$(BIN)/python example/example.py

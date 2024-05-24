@@ -2,3 +2,5 @@ env/
 .env
 *.egg-info
 .ruff_cache/
+poetry.lock
+__pycache__

@@ -1,7 +1,3 @@
-packages = [
-  {include = "fable", from = "src"},
-]
-
 [project]
 authors = [
   {name = "Jack Bonatakis", email = "jackbonataki@gmail.com"},
@@ -19,3 +15,13 @@ dev = [
   "pytest",
   "ruff",
 ]
+
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F403"]
