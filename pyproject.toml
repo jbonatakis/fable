@@ -1,0 +1,21 @@
+packages = [
+  {include = "fable", from = "src"},
+]
+
+[project]
+authors = [
+  {name = "Jack Bonatakis", email = "jackbonataki@gmail.com"},
+]
+dependencies = [
+  "faker",
+]
+description = ""
+name = "fable"
+version = "0.0.1"
+
+[project.optional-dependencies]
+dev = [
+  "python-dotenv",
+  "pytest",
+  "ruff",
+]
