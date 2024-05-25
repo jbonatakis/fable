@@ -16,11 +16,17 @@ format: $(VENV)
 	@$(BIN)/python -m ruff format
 
 test: $(VENV)
-	@$(BIN)/python -m pytest test/
+	@$(BIN)/python -m pytest tests/
 
 clean:
 	@rm -rf env/ .ruff_cache/ fable.egg-info/ \
-	src/fable.egg-info/ src/fable/__pycache__ 
+	src/fable.egg-info/ src/fable/__pycache__ \
+	tests/__pycache__ .pytest_cache/
+
+reset: clean $(VENV)
+
+todo:
+	@grep -inr "todo" src/ test/
 
 run-example: $(VENV)
 	@$(BIN)/python example/example.py

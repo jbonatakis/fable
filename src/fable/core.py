@@ -1,11 +1,10 @@
+import random
 from typing import List
 
-import random
-
 import polars as pl
-from .configs import FieldConfig, FieldMetadata, TableConfig
+from .models import FieldConfig, FieldMetadata, TableConfig
 
-# TODO: Find a better place for this?
+# TODO: Find a better place for polars configs?
 pl.Config.set_tbl_hide_dataframe_shape(True)
 pl.Config.set_tbl_hide_column_data_types(True)
 
@@ -17,6 +16,7 @@ class Field:
         self.name = config.name
         self.dtype = config.dtype
 
+        # TODO: Better type hint
         self.values: List[self.dtype] = []
 
     def __str__(self):
@@ -34,7 +34,7 @@ class Field:
     def populate(self, row_count: int):
         """Populate this field"""
         for _ in range(row_count):
-            # Placeholder
+            # TODO: Actually take dtype into consideration
             self.values.append(random.randint(0, 5_000))
 
 
@@ -47,7 +47,7 @@ class Table:
 
         self.field_map = {}
         self.fields: List[Field] = []
-        self.data = None
+        self.data: pl.DataFrame = None
 
     def __str__(self):
         return f"{str(self.__class__)} : {str(self.__dict__)}"
@@ -97,10 +97,25 @@ class Table:
     def truncate(self):
         self.data = None
 
-    def drop(self):
+    def clear(self):
         self.data = None
         self.fields = []
         self.field_map = {}
+
+    def link(self, field: Field, linking_table, linking_field: Field):
+        if not isinstance(linking_table, self.__class__):
+            raise Exception(
+                f"Received {linking_table.__class__}. Must pass a Table to linking_table"
+            )
+
+        if linking_table == self:
+            raise Exception("Link must be set between two different tables")
+
+        if not all(isinstance(field, Field), isinstance(linking_field, Field)):
+            raise Exception("Fields can only be linked with other Fields")
+
+        # TODO: Update field_map in each table with link information.
+        # Or maybe a separate `link` map on each object?
 
     def load_to(self, target):
         """Load table to a target database"""

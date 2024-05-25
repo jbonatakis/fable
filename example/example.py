@@ -1,5 +1,5 @@
 from fable import Table, Field
-from fable.configs import TableConfig, FieldConfig
+from fable.models import TableConfig, FieldConfig
 
 example_table_config = TableConfig(name="example_table", row_count="500")
 example_field_config = FieldConfig(name="example_field_1", dtype="varchar")
@@ -13,6 +13,10 @@ field_list = [
     Field(example_field2_config),
     Field(example_field3_config),
 ]
+
+example_field = Field(example_field_config)
+example_field2 = Field(example_field2_config)
+example_field3 = Field(example_field3_config)
 
 print(example_table)
 for field in field_list:
@@ -30,3 +34,5 @@ example_table.add_field(Field(example_field_config))
 print(example_table.field_map)
 example_table.populate()
 print(example_table.head(5))
+
+example_table.link(example_field, example_field2, example_field2)
