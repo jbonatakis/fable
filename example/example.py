@@ -1,22 +1,40 @@
 from fable import Table, Field
 from fable.models import TableConfig, FieldConfig
+from fable.types import Integer
 
-example_table_config = TableConfig(name="example_table", row_count="500")
-example_field_config = FieldConfig(name="example_field_1", dtype="varchar")
-example_field2_config = FieldConfig(name="example_field_2", dtype="varchar")
-example_field3_config = FieldConfig(name="example_field_3", dtype="varchar")
+# Define a TableConfig
+example_table_config = TableConfig(name="example_table", row_count=1000)
 
+# Define some FieldConfigs, each with custom params
+example_field_config = FieldConfig(
+    name="example_field_1",
+    dtype=Integer,
+    params={"lower_bound": -2500, "upper_bound": -2000},
+)
+
+example_field2_config = FieldConfig(
+    name="example_field_2",
+    dtype=Integer,
+    params={"lower_bound": 2500, "upper_bound": 3000},
+)
+
+example_field3_config = FieldConfig(
+    name="example_field_3", dtype=Integer, params={"lower_bound": 0, "upper_bound": 10}
+)
+
+# Instantiate a table using our TableConfig
 example_table = Table(example_table_config)
 
-field_list = [
-    Field(example_field_config),
-    Field(example_field2_config),
-    Field(example_field3_config),
-]
-
+# Instantiate some fields using our field config
 example_field = Field(example_field_config)
 example_field2 = Field(example_field2_config)
 example_field3 = Field(example_field3_config)
+
+field_list = [
+    example_field,
+    example_field2,
+    example_field3,
+]
 
 print(example_table)
 for field in field_list:

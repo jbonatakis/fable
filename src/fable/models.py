@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+from .types import FableType
+
 
 class TableConfig(BaseModel):
     name: str
@@ -8,9 +10,10 @@ class TableConfig(BaseModel):
 
 class FieldConfig(BaseModel):
     name: str
-    dtype: str
+    dtype: FableType.__class__
+    params: dict
 
 
 class FieldMetadata(BaseModel):
-    dtype: str
+    dtype: FableType.__class__
     position: int

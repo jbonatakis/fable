@@ -3,16 +3,20 @@ import datetime
 from . import generators
 
 
-class Integer:
+class FableType:
+    pass
+
+
+class Integer(FableType):
     dtype = int
     generator = generators.NumericGenerator
 
 
-class Varchar:
+class Varchar(FableType):
     dtype = str
     generator = generators.VarcharGenerator
 
 
-class Date:
+class Date(FableType):
     dtype = datetime.date
     generator = generators.DateGenerator

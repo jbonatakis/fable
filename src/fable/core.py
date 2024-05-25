@@ -1,4 +1,3 @@
-import random
 from typing import List
 
 import polars as pl
@@ -15,6 +14,7 @@ class Field:
     def __init__(self, config: FieldConfig):
         self.name = config.name
         self.dtype = config.dtype
+        self.params = config.params
 
         # TODO: Better type hint
         self.values: List[self.dtype] = []
@@ -38,9 +38,7 @@ class Field:
 
     def populate(self, row_count: int):
         """Populate this field"""
-        for _ in range(row_count):
-            # TODO: Actually take dtype into consideration
-            self.values.append(random.randint(0, 5_000))
+        self.values = self.dtype.generator.generate(row_count, self.params)
 
 
 class Table:
