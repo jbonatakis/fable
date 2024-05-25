@@ -4,6 +4,8 @@ authors = [
 ]
 dependencies = [
   "faker",
+  "polars",
+  "pydantic",
 ]
 description = ""
 name = "fable"

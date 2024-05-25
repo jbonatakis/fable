@@ -1,13 +1,32 @@
-import fable
+from fable import Table, Field
+from fable.configs import TableConfig, FieldConfig
 
-example_table = fable.Table("example_table")
-print(example_table.name)
+example_table_config = TableConfig(name="example_table", row_count="500")
+example_field_config = FieldConfig(name="example_field_1", dtype="varchar")
+example_field2_config = FieldConfig(name="example_field_2", dtype="varchar")
+example_field3_config = FieldConfig(name="example_field_3", dtype="varchar")
 
-example_field_1 = fable.Field("example_field_1", "varchar")
-example_table.add_field(example_field_1)
+example_table = Table(example_table_config)
 
-example_field_2 = fable.Field("example_field_2", "varchar")
-example_table.add_field(example_field_2)
+field_list = [
+    Field(example_field_config),
+    Field(example_field2_config),
+    Field(example_field3_config),
+]
+
+print(example_table)
+for field in field_list:
+    example_table.add_field(field)
 
 for field in example_table.fields:
-    print(field.__dict__)
+    print(field)
+
+print(example_table)
+example_table.remove_field("example_field_1")
+print()
+print(example_table.field_map)
+
+example_table.add_field(Field(example_field_config))
+print(example_table.field_map)
+example_table.populate()
+print(example_table.head(5))
