@@ -34,5 +34,11 @@ example_table.add_field(Field(example_field_config))
 print(example_table.field_map)
 example_table.populate()
 print(example_table.head(5))
+print(example_table.data.count())
 
-example_table.link(example_field, example_field2, example_field2)
+try:
+    example_table.link(example_field, example_field2, example_field2)
+except ValueError:
+    print(f"Failed to link fields {example_field.name} and {example_field2.name}")
+
+example_table.to_csv("example/out.csv", separator="|", float_precision=2)

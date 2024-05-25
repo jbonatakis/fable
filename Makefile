@@ -26,7 +26,7 @@ clean:
 reset: clean $(VENV)
 
 todo:
-	@grep -inr "todo" src/ test/
+	@grep -inr "todo" src/ tests/
 
 run-example: $(VENV)
 	@$(BIN)/python example/example.py

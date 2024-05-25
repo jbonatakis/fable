@@ -18,13 +18,18 @@ class Field:
 
         # TODO: Better type hint
         self.values: List[self.dtype] = []
+        self.table: Table = None
 
     def __str__(self):
         return f"{str(self.__class__)} : {str(self.__dict__)}"
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
-            return self.name == other.name
+            return (self.name, self.dtype, self.table) == (
+                other.name,
+                other.dtype,
+                other.table,
+            )
         else:
             return False
 
@@ -45,7 +50,7 @@ class Table:
         self.name = config.name
         self.row_count = config.row_count
 
-        self.field_map = {}
+        self.field_map: dict[str, FieldMetadata] = {}
         self.fields: List[Field] = []
         self.data: pl.DataFrame = None
 
@@ -72,6 +77,7 @@ class Table:
                 dtype=field.dtype, position=1 + len(self.fields)
             )
             self.fields.append(field)
+            field.table = self
         else:
             raise Exception(f"Duplicate field: {field.name}")
 
@@ -104,8 +110,8 @@ class Table:
 
     def link(self, field: Field, linking_table, linking_field: Field):
         if not isinstance(linking_table, self.__class__):
-            raise Exception(
-                f"Received {linking_table.__class__}. Must pass a Table to linking_table"
+            raise ValueError(
+                f"Received table of type {linking_table.__class__}. Must pass a Table to linking_table"
             )
 
         if linking_table == self:
@@ -117,6 +123,10 @@ class Table:
         # TODO: Update field_map in each table with link information.
         # Or maybe a separate `link` map on each object?
 
-    def load_to(self, target):
-        """Load table to a target database"""
-        pass
+    def to_csv(self, outfile: str, **kwargs):
+        """Export table as a csv file.
+        Any valid pl.Dataframe.write_csv params can be passed as kwargs"""
+        if self.data is not None:
+            self.data.write_csv(file=outfile, **kwargs)
+        else:
+            raise Exception("Failed to write empty table to csv")
