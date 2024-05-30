@@ -1,0 +1,8 @@
+env/
+.env
+*.egg-info
+.ruff_cache/
+.pytest_cache/
+poetry.lock
+__pycache__
+example/out.csv
