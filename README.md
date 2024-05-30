@@ -26,7 +26,7 @@ A `Table` is stored in a Polars DataFrame.
 ```python
 from fable import Table, Field
 from fable.models import TableConfig, FieldConfig
-from fable.types import Integer, Varchar
+from fable.types import Integer
 
 # Define a TableConfig
 example_table_config = TableConfig(name="example_table", row_count=1000)
@@ -39,7 +39,7 @@ example_field_config = FieldConfig(
 )
 
 example_field2_config = FieldConfig(
-    name="example_field_3", ftype=Integer, params={"lower_bound": 0, "upper_bound": 10}
+    name="example_field_2", ftype=Integer, params={"lower_bound": 0, "upper_bound": 10}
 )
 
 # Instantiate a table using our TableConfig
