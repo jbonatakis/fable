@@ -2,7 +2,7 @@
 
 *ftypes*: ftypes (Fable Types) define what kind of data each `Field` generates. Notices that in 
 [models.py](src/fable/models.py), the `FieldConfig` class requires an `ftype`. This should map to
-a defined type in [types.py](src/fable/models.py).
+a defined type in [types.py](src/fable/types.py).
 
 *Generators*: Generators are the mechanism by which a Field actually gets populated with data.
 There are different types of generators (see [generators.py](src/fable/generators.py)). Each
@@ -21,3 +21,45 @@ will be passed to the `populate()` method of each `Field` associated with a `Tab
 the `generate()` method of each generator associated with the `ftype` of each `Field`. 
 
 A `Table` is stored in a Polars DataFrame.
+
+### Usage
+```python
+from fable import Table, Field
+from fable.models import TableConfig, FieldConfig
+from fable.types import Integer, Varchar
+
+# Define a TableConfig
+example_table_config = TableConfig(name="example_table", row_count=1000)
+
+# Define some FieldConfigs
+example_field_config = FieldConfig(
+    name="example_field_1",
+    ftype=Integer,
+    params={"lower_bound": -2500, "upper_bound": -2000},
+)
+
+example_field2_config = FieldConfig(
+    name="example_field_3", ftype=Integer, params={"lower_bound": 0, "upper_bound": 10}
+)
+
+# Instantiate a table using our TableConfig
+example_table = Table(example_table_config)
+
+# Instantiate some fields using our field config
+example_field = Field(example_field_config)
+example_field2 = Field(example_field2_config)
+
+field_list = [
+    example_field,
+    example_field2,
+]
+
+# Add the Fields to the Table
+example_table.add_fields(field_list)
+
+# Add some data to the Table
+example_table.populate()
+
+# Inspect the data in the Table
+example_table.head()
+```
