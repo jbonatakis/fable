@@ -25,5 +25,8 @@ requires = ["setuptools"]
 [tool.setuptools]
 package-dir = {"" = "src"}
 
+[tool.ruff]
+line-length = 99
+
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F403"]

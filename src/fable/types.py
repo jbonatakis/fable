@@ -4,6 +4,8 @@ from . import generators
 
 
 class FableType:
+    """This class exists solely to be subclassed for type checking purposes"""
+
     pass
 
 
@@ -14,7 +16,7 @@ class Integer(FableType):
 
 class Varchar(FableType):
     dtype = str
-    generator = generators.VarcharGenerator
+    generator = generators.StringGenerator
 
 
 class Date(FableType):

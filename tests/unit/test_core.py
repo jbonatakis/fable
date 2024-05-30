@@ -1,20 +1,22 @@
 import pytest
 
-from fable import Table, Field
-from fable.models import TableConfig, FieldConfig
-from fable.types import Integer
+from src.fable.core import Table, Field
+from src.fable.models import TableConfig, FieldConfig
+from src.fable.types import Integer
 
 
 def test_field_equality():
     config = FieldConfig(
-        name="field", dtype=Integer, params={"lower_bound": 0, "upper_bound": 10}
+        name="field",
+        ftype=Integer,
+        params={"lower_bound": 0, "upper_bound": 10},
     )
     field_1 = Field(config)
     field_2 = Field(config)
     field_3 = Field(
         FieldConfig(
             name="other_field",
-            dtype=Integer,
+            ftype=Integer,
             params={"lower_bound": 0, "upper_bound": 10},
         )
     )
@@ -37,7 +39,7 @@ def test_table_equality():
 def test_row_count():
     table_config = TableConfig(name="table")
     field_config = FieldConfig(
-        name="field", dtype=Integer, params={"lower_bound": 0, "upper_bound": 10}
+        name="field", ftype=Integer, params={"lower_bound": 0, "upper_bound": 10}
     )
     field = Field(field_config)
 
@@ -51,7 +53,7 @@ def test_row_count():
 def test_to_csv():
     table_config = TableConfig(name="table")
     field_config = FieldConfig(
-        name="field", dtype=Integer, params={"lower_bound": 0, "upper_bound": 10}
+        name="field", ftype=Integer, params={"lower_bound": 0, "upper_bound": 10}
     )
     field = Field(field_config)
 
@@ -66,7 +68,7 @@ def test_to_csv():
 def test_add_field():
     table_config = TableConfig(name="table")
     field_config = FieldConfig(
-        name="field", dtype=Integer, params={"lower_bound": 0, "upper_bound": 10}
+        name="field", ftype=Integer, params={"lower_bound": 0, "upper_bound": 10}
     )
     field = Field(field_config)
 

@@ -13,11 +13,11 @@ class Field:
 
     def __init__(self, config: FieldConfig):
         self.name = config.name
-        self.dtype = config.dtype
+        self.ftype = config.ftype
         self.params = config.params
 
         # TODO: Better type hint
-        self.values: List[self.dtype] = []
+        self.values: List[self.ftype] = []
         self.table: Table = None
 
     def __str__(self):
@@ -25,9 +25,9 @@ class Field:
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
-            return (self.name, self.dtype, self.table) == (
+            return (self.name, self.ftype, self.table) == (
                 other.name,
-                other.dtype,
+                other.ftype,
                 other.table,
             )
         else:
@@ -38,7 +38,7 @@ class Field:
 
     def populate(self, row_count: int):
         """Populate this field"""
-        self.values = self.dtype.generator.generate(row_count, self.params)
+        self.values = self.ftype.generator.generate(row_count, self.params)
 
 
 class Table:
@@ -72,12 +72,16 @@ class Table:
     def add_field(self, field: Field):
         if field.name not in self.field_map:
             self.field_map[field.name] = FieldMetadata(
-                dtype=field.dtype, position=1 + len(self.fields)
+                ftype=field.ftype, position=1 + len(self.fields)
             )
             self.fields.append(field)
             field.table = self
         else:
             raise Exception(f"Duplicate field: {field.name}")
+    
+    def add_fields(self, fields: List[Field]):
+        for field in fields:
+            self.add_field(field)
 
     def remove_field(self, field_name: str):
         position = self.field_map[field_name].position
@@ -99,9 +103,20 @@ class Table:
         self.data = pl.DataFrame({field.name: field.values for field in self.fields})
 
     def truncate(self):
-        self.data = None
+        """This method keeps the structure of the table in place, but removes the data
+        from each row in the `data` instance attribute using the pl.Dataframe.clear() method
+
+        Note that it is different than the `clear()` method of this class
+        """
+        self.data.clear()
 
     def clear(self):
+        """Completely resets the table to an empty state. The `data` attribute is reset to its
+        default fo None, the `fields` attribute is reset to its default of an empty list, and
+        the `field_map` attribute is reset to its default of an empty dictionary.
+
+        Note that this is different than the `clear()` method of a Polars DataFrame
+        """
         self.data = None
         self.fields = []
         self.field_map = {}

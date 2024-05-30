@@ -1,3 +1,4 @@
+from typing import Any
 from pydantic import BaseModel
 
 from .types import FableType
@@ -10,10 +11,10 @@ class TableConfig(BaseModel):
 
 class FieldConfig(BaseModel):
     name: str
-    dtype: FableType.__class__
-    params: dict
+    ftype: FableType.__class__
+    params: dict[str, Any]
 
 
 class FieldMetadata(BaseModel):
-    dtype: FableType.__class__
+    ftype: FableType.__class__
     position: int

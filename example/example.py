@@ -1,6 +1,10 @@
 from fable import Table, Field
 from fable.models import TableConfig, FieldConfig
-from fable.types import Integer
+from fable.types import Integer, Varchar
+
+import logging
+
+logging.basicConfig(level=logging.WARNING)
 
 # Define a TableConfig
 example_table_config = TableConfig(name="example_table", row_count=1000)
@@ -8,18 +12,18 @@ example_table_config = TableConfig(name="example_table", row_count=1000)
 # Define some FieldConfigs, each with custom params
 example_field_config = FieldConfig(
     name="example_field_1",
-    dtype=Integer,
+    ftype=Integer,
     params={"lower_bound": -2500, "upper_bound": -2000},
 )
 
 example_field2_config = FieldConfig(
     name="example_field_2",
-    dtype=Integer,
+    ftype=Varchar,
     params={"lower_bound": 2500, "upper_bound": 3000},
 )
 
 example_field3_config = FieldConfig(
-    name="example_field_3", dtype=Integer, params={"lower_bound": 0, "upper_bound": 10}
+    name="example_field_3", ftype=Integer, params={"lower_bound": 0, "upper_bound": 10}
 )
 
 # Instantiate a table using our TableConfig
@@ -36,14 +40,15 @@ field_list = [
     example_field3,
 ]
 
-print(example_table)
+print(example_table, "\n")
 for field in field_list:
     example_table.add_field(field)
 
 for field in example_table.fields:
     print(field)
 
-print(example_table)
+
+print("\n", example_table.__dict__)
 example_table.remove_field("example_field_1")
 print()
 print(example_table.field_map)
@@ -51,7 +56,7 @@ print(example_table.field_map)
 example_table.add_field(Field(example_field_config))
 print(example_table.field_map)
 example_table.populate()
-print(example_table.head(5))
+print(example_table.head())
 print(example_table.data.count())
 
 try:
