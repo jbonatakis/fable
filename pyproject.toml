@@ -8,7 +8,7 @@ dependencies = [
   "pydantic",
 ]
 description = ""
-name = "fable"
+name = "fabledata"
 version = "0.0.1"
 
 [project.optional-dependencies]
