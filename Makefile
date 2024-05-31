@@ -21,7 +21,7 @@ test: $(VENV)
 clean:
 	@rm -rf env/ .ruff_cache/ fable.egg-info/ \
 	src/fable.egg-info/ src/fable/__pycache__ \
-	tests/__pycache__ .pytest_cache/
+	tests/__pycache__ .pytest_cache/ dist/
 
 reset: clean $(VENV)
 
