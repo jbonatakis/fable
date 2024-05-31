@@ -65,7 +65,7 @@ jobs:
     - build
     environment:
       name: pypi test
-      url: https://testpypi.org/p/fabledata
+      url: https://test.pypi.org/p/fabledata
     permissions:
       id-token: write
     steps:
