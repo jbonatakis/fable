@@ -36,6 +36,9 @@ jobs:
     needs:
     - tag-github-release
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -47,7 +50,7 @@ jobs:
 
       - name: Build a binary wheel and a source tarball
         run: |
-          cd /home/runner/work/fable && python3 -m build
+          python3 -m build
 
       - name: Store the distribution packages
         uses: actions/upload-artifact@v3
