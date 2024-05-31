@@ -48,6 +48,7 @@ jobs:
           path: dist/
 
       - name: Set environment
+        runs-on: ubuntu-latest
         environment:
           name: pypi test
           url: https://testpypi.org/p/fabledata
