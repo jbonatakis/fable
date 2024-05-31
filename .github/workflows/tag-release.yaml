@@ -4,7 +4,7 @@ on:
       - main
 
 jobs:
-  get-version:
+  tag-github-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,7 +28,13 @@ jobs:
           tag: ${{ steps.tag-version.outputs.new_tag }}
           name: Release ${{ steps.tag-version.outputs.new_tag }}
           body: ${{ steps.tag-version.outputs.changelog }}
-
+  
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs:
+    - tag-github-release
+    steps:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -47,13 +53,17 @@ jobs:
           name: python-package-distributions
           path: dist/
 
-      - name: Set environment
-        environment:
-          name: pypi test
-          url: https://testpypi.org/p/fabledata
-        permissions:
-          id-token: write
-
+  pypi-release:
+    name: PyPi Release
+    runs-on: ubuntu-latest
+    needs:
+    - build
+    environment:
+      name: pypi test
+      url: https://testpypi.org/p/fabledata
+    permissions:
+      id-token: write
+    steps:
       - name: Download all the dists
         uses: actions/download-artifact@v3
         with:
