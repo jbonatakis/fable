@@ -1,7 +1,7 @@
 from typing import Any
 from pydantic import BaseModel
 
-from .types import FableType
+from .generators import AbstractBaseGenerator
 
 
 class TableConfig(BaseModel):
@@ -11,10 +11,12 @@ class TableConfig(BaseModel):
 
 class FieldConfig(BaseModel):
     name: str
-    ftype: FableType.__class__
-    params: dict[str, Any]
+    dtype: Any
+    # TODO: This is bad
+    generator: AbstractBaseGenerator.__class__.__class__
+    params: dict[str, Any] = None
 
 
 class FieldMetadata(BaseModel):
-    ftype: FableType.__class__
+    dtype: type
     position: int

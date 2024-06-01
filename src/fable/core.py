@@ -13,11 +13,12 @@ class Field:
 
     def __init__(self, config: FieldConfig):
         self.name = config.name
-        self.ftype = config.ftype
+        self.dtype = config.dtype
+        self.generator = config.generator
         self.params = config.params
 
         # TODO: Better type hint
-        self.values: List[self.ftype] = []
+        self.values: List[self.generator.return_type] = []
         self.table: Table = None
 
     def __str__(self):
@@ -25,9 +26,9 @@ class Field:
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
-            return (self.name, self.ftype, self.table) == (
+            return (self.name, self.generator, self.table) == (
                 other.name,
-                other.ftype,
+                other.generator,
                 other.table,
             )
         else:
@@ -38,7 +39,11 @@ class Field:
 
     def populate(self, row_count: int):
         """Populate this field"""
-        self.values = self.ftype.generator.generate(row_count, self.params)
+        self.values = (
+            self.generator.generate(row_count, self.params)
+            if self.params is not None
+            else self.generator.generate(row_count)
+        )
 
 
 class Table:
@@ -72,13 +77,13 @@ class Table:
     def add_field(self, field: Field):
         if field.name not in self.field_map:
             self.field_map[field.name] = FieldMetadata(
-                ftype=field.ftype, position=1 + len(self.fields)
+                dtype=field.dtype, position=1 + len(self.fields)
             )
             self.fields.append(field)
             field.table = self
         else:
             raise Exception(f"Duplicate field: {field.name}")
-    
+
     def add_fields(self, fields: List[Field]):
         for field in fields:
             self.add_field(field)
