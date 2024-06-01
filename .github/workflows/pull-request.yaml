@@ -20,3 +20,12 @@ jobs:
 
       - name: Test
         run: make test
+
+  check-dist:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check Dist
+        run: make check-dist

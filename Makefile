@@ -12,6 +12,9 @@ $(VENV):
 lint: $(VENV)
 	@$(BIN)/python -m ruff check
 
+check-dist: $(VENV)
+	@python3 -m build && twine check --strict dist/fabledata*.whl 
+
 format: $(VENV)
 	@$(BIN)/python -m ruff format
 
