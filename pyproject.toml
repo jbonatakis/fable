@@ -7,8 +7,9 @@ dependencies = [
   "polars",
   "pydantic",
 ]
-description = ""
+description = "README.md"
 name = "fabledata"
+readme = "README.md"
 version = "0.0.1"
 
 [project.optional-dependencies]

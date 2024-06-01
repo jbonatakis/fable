@@ -12,6 +12,12 @@ $(VENV):
 lint: $(VENV)
 	@$(BIN)/python -m ruff check
 
+check-dist: $(VENV)
+	@$(BIN)/python -m pip install --upgrade build && \
+	$(BIN)/python -m pip install --upgrade twine && \
+	$(BIN)/python -m build && \
+	$(BIN)/python -m twine check --strict dist/fabledata*.whl 
+
 format: $(VENV)
 	@$(BIN)/python -m ruff format
 
