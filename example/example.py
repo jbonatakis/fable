@@ -14,7 +14,8 @@ score_conf = FieldConfig(
     name="score",
     dtype=int,
     generator=fg.NumericGenerator,
-    params={"lower_bound": 350, "upper_bound": 850},
+    lower_bound=350,
+    upper_bound=850,
 )
 
 name_conf = FieldConfig(

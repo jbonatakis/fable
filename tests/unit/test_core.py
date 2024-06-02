@@ -44,7 +44,8 @@ def test_row_count():
         name="field",
         dtype=int,
         generator=NumericGenerator,
-        params={"lower_bound": 0, "upper_bound": 10},
+        lower_bound=0,
+        upper_bound=10,
     )
     field = Field(field_config)
 
@@ -61,7 +62,8 @@ def test_to_csv():
         name="field",
         dtype=int,
         generator=NumericGenerator,
-        params={"lower_bound": 0, "upper_bound": 10},
+        lower_bound=0,
+        upper_bound=10,
     )
     field = Field(field_config)
 
@@ -79,7 +81,8 @@ def test_add_field():
         name="field",
         dtype=int,
         generator=NumericGenerator,
-        params={"lower_bound": 0, "upper_bound": 10},
+        lower_bound=0,
+        upper_bound=10,
     )
     field = Field(field_config)
 

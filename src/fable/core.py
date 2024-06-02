@@ -15,7 +15,8 @@ class Field:
         self.name = config.name
         self.dtype = config.dtype
         self.generator = config.generator
-        self.params = config.params
+
+        self.params = config.model_extra
 
         # TODO: Better type hint
         self.values: List[self.generator.return_type] = []
@@ -39,11 +40,8 @@ class Field:
 
     def populate(self, row_count: int):
         """Populate this field"""
-        self.values = (
-            self.generator.generate(row_count, self.params)
-            if self.params is not None
-            else self.generator.generate(row_count)
-        )
+        print(f"Params: {self.params}")
+        self.values = self.generator.generate(row_count, self.params)
 
 
 class Table:

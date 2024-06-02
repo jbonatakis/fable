@@ -1,5 +1,5 @@
 from typing import Any
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from .generators import AbstractBaseGenerator
 
@@ -10,11 +10,12 @@ class TableConfig(BaseModel):
 
 
 class FieldConfig(BaseModel):
+    model_config = ConfigDict(extra="allow")
+
     name: str
     dtype: Any
     # TODO: This is bad
     generator: AbstractBaseGenerator.__class__.__class__
-    params: dict[str, Any] = None
 
 
 class FieldMetadata(BaseModel):
