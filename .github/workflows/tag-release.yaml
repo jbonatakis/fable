@@ -2,6 +2,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'pyproject.toml'
 
 jobs:
   tag-github-release:
@@ -64,8 +66,8 @@ jobs:
     needs:
     - build
     environment:
-      name: pypi test
-      url: https://test.pypi.org/p/fabledata
+      name: pypi
+      url: https://pypi.org/p/fabledata
     permissions:
       id-token: write
     steps:
@@ -77,5 +79,3 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://test.pypi.org/legacy/

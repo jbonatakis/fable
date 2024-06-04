@@ -2,13 +2,14 @@ import pytest
 
 from src.fable.core import Table, Field
 from src.fable.models import TableConfig, FieldConfig
-from src.fable.types import Integer
+from src.fable.generators import NumericGenerator
 
 
 def test_field_equality():
     config = FieldConfig(
         name="field",
-        ftype=Integer,
+        dtype=int,
+        generator=NumericGenerator,
         params={"lower_bound": 0, "upper_bound": 10},
     )
     field_1 = Field(config)
@@ -16,7 +17,8 @@ def test_field_equality():
     field_3 = Field(
         FieldConfig(
             name="other_field",
-            ftype=Integer,
+            dtype=int,
+            generator=NumericGenerator,
             params={"lower_bound": 0, "upper_bound": 10},
         )
     )
@@ -39,7 +41,11 @@ def test_table_equality():
 def test_row_count():
     table_config = TableConfig(name="table")
     field_config = FieldConfig(
-        name="field", ftype=Integer, params={"lower_bound": 0, "upper_bound": 10}
+        name="field",
+        dtype=int,
+        generator=NumericGenerator,
+        lower_bound=0,
+        upper_bound=10,
     )
     field = Field(field_config)
 
@@ -53,7 +59,11 @@ def test_row_count():
 def test_to_csv():
     table_config = TableConfig(name="table")
     field_config = FieldConfig(
-        name="field", ftype=Integer, params={"lower_bound": 0, "upper_bound": 10}
+        name="field",
+        dtype=int,
+        generator=NumericGenerator,
+        lower_bound=0,
+        upper_bound=10,
     )
     field = Field(field_config)
 
@@ -68,7 +78,11 @@ def test_to_csv():
 def test_add_field():
     table_config = TableConfig(name="table")
     field_config = FieldConfig(
-        name="field", ftype=Integer, params={"lower_bound": 0, "upper_bound": 10}
+        name="field",
+        dtype=int,
+        generator=NumericGenerator,
+        lower_bound=0,
+        upper_bound=10,
     )
     field = Field(field_config)
 
