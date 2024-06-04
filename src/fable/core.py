@@ -40,7 +40,6 @@ class Field:
 
     def populate(self, row_count: int):
         """Populate this field"""
-        print(f"Params: {self.params}")
         self.values = self.generator.generate(row_count, self.params)
 
 
