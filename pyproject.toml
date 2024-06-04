@@ -10,7 +10,7 @@ dependencies = [
 description = "README.md"
 name = "fabledata"
 readme = "README.md"
-version = "0.0.1"
+version = "0.0.2"
 
 [project.optional-dependencies]
 dev = [
