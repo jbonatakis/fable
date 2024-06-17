@@ -27,7 +27,9 @@ name_conf = FieldConfig(
 birthday_conf = FieldConfig(
     name="birthday",
     dtype=str,
-    generator=fg.DateGenerator,
+    generator=fg.FablegenDate,
+    start_date="1993-10-25",
+    end_date="2024-06-17"
 )
 
 # Instantiate a table using our TableConfig
