@@ -103,15 +103,16 @@ class DateGenerator(AbstractBaseGenerator):
     def _validate_params(cls):
         pass
 
+
 class FablegenDate(AbstractBaseGenerator):
     @classmethod
     def generate(cls, row_count: int, params) -> List[str]:
         return fablegen.random_date(params["start_date"], params["end_date"], row_count)
-    
+
     @classmethod
     def _generate_value(cls):
         pass
-    
+
     @classmethod
     def _validate_params(cls):
         pass
