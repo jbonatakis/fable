@@ -3,6 +3,7 @@ import logging
 import random
 from typing import List
 
+import fablegen
 import faker
 
 
@@ -97,6 +98,20 @@ class DateGenerator(AbstractBaseGenerator):
     @classmethod
     def _generate_value(cls):
         return faker.Faker(use_weighting=False).date()
+
+    @classmethod
+    def _validate_params(cls):
+        pass
+
+
+class FablegenDate(AbstractBaseGenerator):
+    @classmethod
+    def generate(cls, row_count: int, params) -> List[str]:
+        return fablegen.random_date(params["start_date"], params["end_date"], row_count)
+
+    @classmethod
+    def _generate_value(cls):
+        pass
 
     @classmethod
     def _validate_params(cls):

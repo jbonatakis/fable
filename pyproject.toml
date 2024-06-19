@@ -3,6 +3,7 @@ authors = [
   {name = "Jack Bonatakis", email = "jackbonataki@gmail.com"},
 ]
 dependencies = [
+  "fablegen==0.0.1",
   "faker",
   "polars",
   "pydantic",
@@ -10,7 +11,7 @@ dependencies = [
 description = "README.md"
 name = "fabledata"
 readme = "README.md"
-version = "0.0.2"
+version = "0.0.3"
 
 [project.optional-dependencies]
 dev = [

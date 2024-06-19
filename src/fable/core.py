@@ -1,3 +1,4 @@
+import time
 from typing import List
 
 import polars as pl
@@ -94,13 +95,18 @@ class Table:
             if value.position > position:
                 value.position -= 1
 
-    def populate(self):
+    def populate(self, timing=False):
         """Populate the fields associated with this table"""
         if self.data is not None:
             raise Exception("This table has already been populated")
 
+        start = time.time()
         for field in self.fields:
             field.populate(self.row_count)
+        end = time.time()
+
+        if timing:
+            print(f"Runtime: {end-start} seconds")
 
         self.data = pl.DataFrame({field.name: field.values for field in self.fields})
 

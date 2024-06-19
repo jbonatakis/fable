@@ -27,7 +27,10 @@ name_conf = FieldConfig(
 birthday_conf = FieldConfig(
     name="birthday",
     dtype=str,
-    generator=fg.DateGenerator,
+    # generator=fg.DateGenerator
+    generator=fg.FablegenDate,
+    start_date="1993-10-25",
+    end_date="2024-06-17",
 )
 
 # Instantiate a table using our TableConfig
@@ -55,7 +58,7 @@ users_table.remove_field("score")
 users_table.add_field(Field(score_conf))
 print("\n", users_table)
 
-users_table.populate()
+users_table.populate(timing=True)
 print(users_table.head())
 print(users_table.data.count())
 
